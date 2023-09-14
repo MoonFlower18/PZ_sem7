@@ -1,10 +1,9 @@
 ---
 title: "PZ_1"
 author: "MoonFlower18"
-format: html
-editor: visual
-md:
-  output-file: PZ_1.md
+format: 
+  md:
+    output-file: PZ_1.md
 ---
 
 ## Цель работы
