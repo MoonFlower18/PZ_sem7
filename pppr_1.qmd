@@ -1,1 +1,16 @@
-1234567890
+---
+title: "PZ_1"
+author: "MoonFlower18"
+format: html
+editor: visual
+md:
+  output-file: PZ_1.md
+---
+
+## Цель работы
+
+1. ааа
+
+## Ход выполнения работы
+
+ааа
