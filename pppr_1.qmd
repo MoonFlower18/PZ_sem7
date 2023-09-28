@@ -1,6 +1,6 @@
 ---
-title: "PZ_1"
-author: "MoonFlower18"
+title: "Практическое задание №1"
+author: "Журавлева Юлия БИСО-01-20"
 format: 
   md:
     output-file: PZ_1.md
