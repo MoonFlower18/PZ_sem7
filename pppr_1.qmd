@@ -184,80 +184,42 @@ character(0)
 ```
 > dir()
 ```
+```
 [1] "pppr_1.html"     "pppr_1.qmd"      "pppr_1_files"    "PZ_1"           
 [5] "PZ_1.md"         "PZ_sem7_2.Rproj" "README.md"       "testdir"  
+```
 
+Попробуем функцию вызова информации по команде 'list.files'.
 
-| You are amazing!
-
-  |=================                                                   |  26%
-| As we go through this lesson, you should be examining the help page for
-| each new function. Check out the help page for list.files with the command
-| ?list.files.
-
+```
 > ?list.files
+```
 
-| All that practice is paying off!
+Используя функцию 'args()' мы можем узнать какие аргументы даёт введёная в скобках функция. Посмотрим аргументы команды 'list.files()'
 
-  |===================                                                 |  28%
-| One of the most helpful parts of any R help file is the See Also section.
-| Read that section for list.files. Some of these functions may be used in
-| later portions of this lesson.
-
-...
-
-  |=====================                                               |  31%
-| Using the args() function on a function name is also a handy way to see
-| what arguments a function can take.
-
-...
-
-  |=======================                                             |  33%
-| Use the args() function to determine the arguments to list.files().
-
-> args(list.files())
-NULL
-
-| Not quite right, but keep trying. Or, type info() for more options.
-
-| Type args(list.files) to see the arguments to list.files.
-
-> args(list.files
-+ 0
-Error: unexpected numeric constant in:
-"args(list.files
-0"
+```
 > args(list.files)
 function (path = ".", pattern = NULL, all.files = FALSE, full.names = FALSE, 
     recursive = FALSE, ignore.case = FALSE, include.dirs = FALSE, 
     no.. = FALSE) 
 NULL
+```
 
-| That's a job well done!
+Зададим в переменную 'old.dir' нашу рабочую директорию. Это нужно, чтобы в конце к ней вернуться.
 
-  |========================                                            |  36%
-| Assign the value of the current working directory to a variable called
-| "old.dir".
-
+```
 > old.dir <- getwd()
+```
 
-| That's correct!
+С помощью команды 'dir.create()' создадим новый директорий с именем 'testdir' в уже существующий. Так как он был создан ранее, то программа выдаст предупреждение.
 
-  |==========================                                          |  38%
-| We will use old.dir at the end of this lesson to move back to the place
-| that we started. A lot of query functions like getwd() have the useful
-| property that they return the answer to the question as a result of the
-| function.
-
-...
-
-  |============================                                        |  41%
-| Use dir.create() to create a directory in the current working directory
-| called "testdir".
-
+```
 > dir.create("testdir")
+```
+```
 Warning message:
 In dir.create("testdir") : 'testdir' already exists
+```
 
 | Excellent work!
 
