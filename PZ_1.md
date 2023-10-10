@@ -628,24 +628,3 @@ You’re the best!
 Since the character vector LETTERS is longer than the numeric vector
 1:4, R | simply recycles, or repeats, 1:4 until it matches the length of
 LETTERS.
-
-…
-
-|================================================================ | 95%
-| Also worth noting is that the numeric vector 1:4 gets ‘coerced’ into a
-| character vector by the paste() function.
-
-…
-
-|================================================================== |
-97% | We’ll discuss coercion in another lesson, but all it really means
-is that | the numbers 1, 2, 3, and 4 in the output above are no longer
-numbers to R, | but rather characters “1”, “2”, “3”, and “4”.
-
-…
-
-|====================================================================|
-100% | Would you like to receive credit for completing this course on |
-Coursera.org?
-
-1: Yes 2: No
