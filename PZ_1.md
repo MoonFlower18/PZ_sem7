@@ -391,7 +391,7 @@ length()).
 
      [1] 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2
 
-### Векторы
+### Урок №4: Векторы
 
 Начнём с создания вектора чисел, который содержит значения `0.5`, `55`,
 `-10`, `6` и занесён в переменную `num_vect`.
@@ -426,208 +426,85 @@ length()).
 
 *Ответ:* FALSE
 
-(TRUE == TRUE) | (TRUE == FALSE)
+***Вопрос №2.***
 
-1: FALSE 2: TRUE
+    (TRUE == TRUE) | (TRUE == FALSE)
+    TRUE | FALSE = TRUE
 
-Выбор:2
+*Ответ:* TRUE
 
-That’s correct!
+***Вопрос №3.***
 
-|================================ | 47% | ((111 \>= 111) | !(TRUE)) &
-((4 + 1) == 5)
+    ((111 >= 111) | !(TRUE)) & ((4 + 1) == 5)
+    (TRUE | FALSE) & TRUE
+    TRUE & TRUE
 
-1: TRUE 2: FALSE
+*Ответ:* TRUE
 
-Выбор:2
+Вектора могут состоять не только из чисел, но и из символов. Для того,
+чтобы задать в вектор символьные элементы, необходимо использовать
+двойные кавычки-лапки `""`, чтобы обозначить строковый элемент. Зададим
+вектор, состоящий из 3-х слов “My”, “name”, “is” и занесём его в
+переменную `my_char`.
 
-Nice try, but that’s not exactly what I was hoping for. Try again.
+    > my_char <- c("My", "name", "is")
 
-This is a tricky one. Remember that the `!` symbol negates whatever
-comes  
-after it. There’s also an ‘order of operations’ going on here.
-Conditions  
-that are enclosed within parentheses should be evaluated first. Then,
-work  
-your way outwards.
+Выведем на экран значение вектора `my_char`.
 
-1: FALSE 2: TRUE
+    > my_char
 
-Выбор:2
+    [1] "My"   "name" "is" 
 
-Perseverance, that’s the answer.
+Сейчас этот вектор имеет длину 3. Соединим его в один с помощью команды
+`paste()` и добавим пробел, который будет соединять элементы
+`collapse = " "`, а затем выведем всё на экран.
 
-|================================== | 50% | Don’t worry if you found
-these to be tricky. They’re supposed to be. | Working with logical
-statements in R takes practice, but your efforts will | be rewarded in
-future lessons (e.g. subsetting and control structures).
+    > paste(my_char, collapse = " ")
 
-…
+    [1] "My name is"
 
-|==================================== | 53% | Character vectors are also
-very common in R. Double quotes are used to | distinguish character
-objects, as in the following example.
+Осталось только создать новый вектор и добавить туда своё имя. Создадим
+новую переменную `my_name` и занесём туда новый результат.
 
-…
+    > my_name <- c(my_char, "Yuliya")
 
-|====================================== | 55% | Create a character
-vector that contains the following words: “My”, “name”, | “is”. Remember
-to enclose each word in its own set of double quotes, so | that R knows
-they are character strings. Store the vector in a variable | called
-my_char.
+Выведем на экран значение переменной `my_name`.
 
-> my_char \<- c(“My”, “name”, “is”)
+    > my_name
 
-That’s correct!
+    [1] "My"     "name"   "is"     "Yuliya"
 
-|======================================= | 58% | Print the contents of
-my_char to see what it looks like.
+Так как вектор записался по элементам, его нужно соединить, добавив
+пробел между ними.
 
-> my_char \[1\] “My” “name” “is”
+    > paste(my_name, collapse = " ")
 
-That’s correct!
+    [1] "My name is Yuliya"
 
-|========================================= | 61% | Right now, my_char is
-a character vector of length 3. Let’s say we want to | join the elements
-of my_char together into one continuous character string | (i.e. a
-character vector of length 1). We can do this using the paste() |
-function.
+Рассмотрим другой вариант - добавление соединяющего символа (пробела)
+при объединении других с помощью команды `sep = " "`. Соединим слова
+“Hello” и “world!”, добавив пробел между ними и выведем это на экран.
 
-…
+    > paste("Hello", "world!", sep = " ")
 
-|=========================================== | 63% | Type paste(my_char,
-collapse = ” “) now. Make sure there’s a space between | the double
-quotes in the `collapse` argument. You’ll see why in a second.
+    [1] "Hello world!"
 
-> paste(my_char, collapse = ” “) \[1\]”My name is”
+Рассмотрим вариант соединения двух векторов в один. Соединим вектор от 1
+до 3 с вектором (“X”, “Y”, “Z”), не используя пробел как соединитель
+между элементами.
 
-Perseverance, that’s the answer.
+    > paste(1:3, c("X","Y","Z"), sep = "")
 
-|============================================= | 66% | The `collapse`
-argument to the paste() function tells R that when we join | together
-the elements of the my_char character vector, we’d like to | separate
-them with single spaces.
+    [1] "1X" "2Y" "3Z"
 
-…
+Если вектора имеют разную длину, то меньший вектор повторяется снова,
+пока больший не закончится. Попробуем перебрать и соединить все буквы
+латинского алфавита с вектором от 1 до 4, используя соединитель
+`sep = "-"`. Команда `LETTERS` автоматически перебирает все буквы, без
+нужды указывать каждую.
 
-|=============================================== | 68% | It seems that
-we’re missing something…. Ah, yes! Your name!
+    > paste(LETTERS, 1:4, sep = "-")
 
-…
-
-|================================================ | 71% | To add (or
-‘concatenate’) your name to the end of my_char, use the c() | function
-like this: c(my_char, “your_name_here”). Place your name in double |
-quotes where I’ve put “your_name_here”. Try it now, storing the result
-in a | new variable called my_name.
-
-> my_name \<- c(my_char, “Yuliya”)
-
-Excellent job!
-
-|================================================== | 74% | Take a look
-at the contents of my_name.
-
-> my_name \[1\] “My” “name” “is” “Yuliya”
-
-You are quite good my friend!
-
-|==================================================== | 76% | Now, use
-the paste() function once more to join the words in my_name | together
-into a single character string. Don’t forget to say collapse = ” | “!
-
-> paste(my_char, collapse = ” “) \[1\]”My name is”
-
-Almost! Try again. Or, type info() for more options.
-
-Use paste(my_name, collapse = ” “) to join all four words together,  
-separated by single spaces.
-
-> paste(my_name, collapse = ” “) \[1\]”My name is Yuliya”
-
-Excellent work!
-
-|====================================================== | 79% | In this
-example, we used the paste() function to collapse the elements of a |
-single character vector. paste() can also be used to join the elements
-of | multiple character vectors.
-
-…
-
-|======================================================= | 82% | In the
-simplest case, we can join two character vectors that are each of |
-length 1 (i.e. join two words). Try paste(“Hello”, “world!”, sep = ” “),
-| where the `sep` argument tells R that we want to separate the joined |
-elements with a single space.
-
-> paste(“Hello”, “world!”, sep = ” “) \[1\]”Hello world!”
-
-You got it!
-
-|========================================================= | 84% | For a
-slightly more complicated example, we can join two vectors, each of |
-length 3. Use paste() to join the integer vector 1:3 with the character
-| vector c(“X”, “Y”, “Z”). This time, use sep = “” to leave no space
-between | the joined elements.
-
-> paste(1:3, c(“X”,“Y”,“Z”), sep = ““) \[1\]”1X” “2Y” “3Z”
-
-You got it right!
-
-|=========================================================== | 87% |
-What do you think will happen if our vectors are of different length? |
-(Hint: we talked about this in a previous lesson.)
-
-…
-
-|============================================================= | 89% |
-Vector recycling! Try paste(LETTERS, 1:4, sep = “-”), where LETTERS is a
-| predefined variable in R containing a character vector of all 26
-letters in | the English alphabet.
-
-> paste(A:Z, 1:4, sep = “-”) Error in paste(A:Z, 1:4, sep = “-”) :
-> object ‘A’ not found paste(“A”:“Z”, 1:4, sep = “-”) Error in “A”:“Z” :
-> NA/NaN argument In addition: Warning messages: 1: In paste(“A”:“Z”,
-> 1:4, sep = “-”) : NAs introduced by coercion 2: In paste(“A”:“Z”, 1:4,
-> sep = “-”) : NAs introduced by coercion paste(с(“A”, “B”, “C”, “D”,
-> “E”, “F”, “G”, “H”, “I”, “G”, “K”, “L”, “M”, “N”, “O”, “P”, “Q”, “R”,
-> “S”, “T”, “U”, “V”, “W”, “X”, “Y”, “Z”), 1:4, sep = “-”) Error in
-> с(“A”, “B”, “C”, “D”, “E”, “F”, “G”, “H”, “I”, “G”, “K”, “L”, : could
-> not find function “с” paste(c(“A”, “B”, “C”, “D”, “E”, “F”, “G”, “H”,
-> “I”, “G”, “K”, “L”, “M”, “N”, “O”, “P”, “Q”, “R”, “S”, “T”, “U”, “V”,
-> “W”, “X”, “Y”, “Z”), 1:4, sep = “-”) \[1\] “A-1” “B-2” “C-3” “D-4”
-> “E-1” “F-2” “G-3” “H-4” “I-1” “G-2” “K-3” “L-4” \[13\] “M-1” “N-2”
-> “O-3” “P-4” “Q-1” “R-2” “S-3” “T-4” “U-1” “V-2” “W-3” “X-4” \[25\]
-> “Y-1” “Z-2”
-
-Not quite! Try again. Or, type info() for more options.
-
-Type paste(LETTERS, 1:4, sep = “-”) to see how R recycles the vector 1:4
-to  
-match the length of LETTERS. Notice we are using `-` as our separator
-this  
-time instead of a single space.
-
-> paste(c(“L”, “E”, “T”, “T”, “E”, “R”, “S”), 1:4, sep = “-”) \[1\]
-> “L-1” “E-2” “T-3” “T-4” “E-1” “R-2” “S-3”
-
-You’re close…I can feel it! Try it again. Or, type info() for more  
-options.
-
-Type paste(LETTERS, 1:4, sep = “-”) to see how R recycles the vector 1:4
-to  
-match the length of LETTERS. Notice we are using `-` as our separator
-this  
-time instead of a single space.
-
-> paste(LETTERS, 1:4, sep = “-”) \[1\] “A-1” “B-2” “C-3” “D-4” “E-1”
-> “F-2” “G-3” “H-4” “I-1” “J-2” “K-3” “L-4” \[13\] “M-1” “N-2” “O-3”
-> “P-4” “Q-1” “R-2” “S-3” “T-4” “U-1” “V-2” “W-3” “X-4” \[25\] “Y-1”
-> “Z-2”
-
-You’re the best!
-
-|=============================================================== | 92% |
-Since the character vector LETTERS is longer than the numeric vector
-1:4, R | simply recycles, or repeats, 1:4 until it matches the length of
-LETTERS.
+     [1] "A-1" "B-2" "C-3" "D-4" "E-1" "F-2" "G-3" "H-4" "I-1" "J-2" "K-3" "L-4"
+    [13] "M-1" "N-2" "O-3" "P-4" "Q-1" "R-2" "S-3" "T-4" "U-1" "V-2" "W-3" "X-4"
+    [25] "Y-1" "Z-2"
