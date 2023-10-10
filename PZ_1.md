@@ -423,9 +423,7 @@ length()).
 
 *Ответ:* FALSE
 
-Great job!
-
-|============================== | 45% | (TRUE == TRUE) | (TRUE == FALSE)
+(TRUE == TRUE) | (TRUE == FALSE)
 
 1: FALSE 2: TRUE
 

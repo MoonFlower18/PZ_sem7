@@ -446,9 +446,7 @@ FALSE & TRUE = FALSE
 
 *Ответ:* FALSE
 
-| Great job!
 
-  |==============================                                      |  45%
 | (TRUE == TRUE) | (TRUE == FALSE)
 
 1: FALSE
