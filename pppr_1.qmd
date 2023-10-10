@@ -442,7 +442,9 @@ mytest.R 2023-09-30 11:36:47  no
 
 ***Вопрос №1.***
 
-"(3 > 5) & (4 == 4)\nFALSE & TRUE = FALSE"
+(3 > 5) & (4 == 4)
+
+FALSE & TRUE = FALSE
 
 *Ответ:* FALSE
 
