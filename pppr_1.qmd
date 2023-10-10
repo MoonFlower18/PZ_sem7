@@ -22,8 +22,7 @@ format:
 
 ```
 > 5+7
-```
-```
+
 [1] 12
 ```
 
@@ -32,8 +31,7 @@ format:
 ```
 > x<-5+7
 > x
-```
-```
+
 [1] 12
 ```
 
@@ -42,8 +40,7 @@ format:
 ```
 > y <- x - 3
 > y
-```
-```
+
 [1] 9
 ```
 
@@ -63,8 +60,7 @@ format:
 
 ```
 > z
-```
-```
+
 [1] 1.10 9.00 3.14
 ```
 
@@ -72,8 +68,7 @@ format:
 
 ```
 > c(z, 555, z)
-```
-```
+
 [1]   1.10   9.00   3.14 555.00   1.10   9.00   3.14
 ```
 
@@ -81,8 +76,7 @@ format:
 
 ```
 > z * 2 + 100
-```
-```
+
 [1] 102.20 118.00 106.28
 ```
 
@@ -91,8 +85,7 @@ format:
 ```
 > my_sqrt <- sqrt(z - 1)
 > my_sqrt
-```
-```
+
 [1] 0.3162278 2.8284271 1.4628739
 ```
 
@@ -100,16 +93,14 @@ format:
 ```
 > my_div <- z / my_sqrt
 > my_div
-```
-```
+
 [1] 3.478505 3.181981 2.146460
 ```
 Когда вектора равны по длине, то операция вычисляется элемент к элементу. Но если они разные, то самый короткий вектор повторяется снова, пока более длинный не закончится. Выведем на экран результат сложение 2-х векторов: 'c(1, 2, 3, 4)' и 'c(0, 10)'.
 
 ```
 > c(1, 2, 3, 4) + c(0, 10)
-```
-```
+
 [1]  1 12  3 14
 ```
 
@@ -117,11 +108,9 @@ format:
 
 ```
 > c(1, 2, 3, 4) + c(0, 10, 100)
-```
-```
+
 [1]   1  12 103   4
-```
-```
+
 Warning message:
 In c(1, 2, 3, 4) + c(0, 10, 100) :
   longer object length is not a multiple of shorter object length
@@ -131,8 +120,7 @@ In c(1, 2, 3, 4) + c(0, 10, 100) :
 
 ``` 
 > z * 2 + 1000
-```
-```
+
 [1] 1002.20 1018.00 1006.28
 ```
 
@@ -140,8 +128,7 @@ In c(1, 2, 3, 4) + c(0, 10, 100) :
 
 ```
 > my_div
-```
-```
+
 [1] 3.478505 3.181981 2.146460
 ```
 
@@ -151,8 +138,7 @@ In c(1, 2, 3, 4) + c(0, 10, 100) :
 
 ```
 > getwd()
-```
-```
+
 [1] "C:/Users/Юлия/Documents/PZ_sem7_7"
 ```
 
@@ -160,8 +146,7 @@ In c(1, 2, 3, 4) + c(0, 10, 100) :
 
 ```
 > ls()
-```
-```
+
 character(0)
 ```
 Назначим 9 в x с помощью команды "x <- 9".
@@ -174,8 +159,7 @@ character(0)
 
 ```
 > ls()
-```
-```
+
 [1] "x"
 ```
 
@@ -183,8 +167,7 @@ character(0)
 
 ```
 > dir()
-```
-```
+
 [1] "pppr_1.html"     "pppr_1.qmd"      "pppr_1_files"    "PZ_1"           
 [5] "PZ_1.md"         "PZ_sem7_2.Rproj" "README.md"       "testdir"  
 ```
@@ -215,8 +198,7 @@ NULL
 
 ```
 > dir.create("testdir")
-```
-```
+
 Warning message:
 In dir.create("testdir") : 'testdir' already exists
 ```
@@ -231,8 +213,7 @@ In dir.create("testdir") : 'testdir' already exists
 
 ```
 > file.create("mytest.R")
-```
-```
+
 [1] TRUE
 ```
 
@@ -240,8 +221,7 @@ In dir.create("testdir") : 'testdir' already exists
 
 ```
 > dir()
-```
-```
+
 [1] "mytest.R"
 ```
 
@@ -249,8 +229,7 @@ In dir.create("testdir") : 'testdir' already exists
 
 ```
 > file.exists("mytest.R")
-```
-```
+
 [1] TRUE
 ```
 
@@ -258,8 +237,7 @@ In dir.create("testdir") : 'testdir' already exists
 
 ```
 > file.info("mytest.R")
-```
-```
+
          size isdir mode               mtime               ctime
 mytest.R    0 FALSE  666 2023-09-30 11:36:47 2023-09-28 15:47:09
                        atime exe
@@ -270,8 +248,7 @@ mytest.R 2023-09-30 11:36:47  no
 
 ```
 > file.rename("mytest.R", "mytest2.R")
-```
-```
+
 [1] TRUE
 ```
 
@@ -279,8 +256,7 @@ mytest.R 2023-09-30 11:36:47  no
 
 ```
 > file.copy("mytest2.R", "mytest3.R")
-```
-```
+
 [1] TRUE
 ```
 
@@ -288,8 +264,7 @@ mytest.R 2023-09-30 11:36:47  no
 
 ```
 > file.path("mytest3.R")
-```
-```
+
 [1] "mytest3.R"
 ```
 
@@ -297,8 +272,7 @@ mytest.R 2023-09-30 11:36:47  no
 
 ```
 > file.path("folder1", "folder2")
-```
-```
+
 [1] "folder1/folder2"
 ```
 
@@ -320,10 +294,9 @@ mytest.R 2023-09-30 11:36:47  no
 > setwd(old.dir)
 ```
 
-
 ### Последовательности чисел
 
-ааааа
+аааааА
 
 ### Вектора
 
