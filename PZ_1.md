@@ -421,9 +421,8 @@ length()).
 
 ***Вопрос №1.***
 
-(3 \> 5) & (4 == 4)
-
-FALSE & TRUE = FALSE
+    (3 > 5) & (4 == 4)
+    FALSE & TRUE = FALSE
 
 *Ответ:* FALSE
 
