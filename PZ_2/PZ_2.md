@@ -273,36 +273,166 @@
     86 Captain Phasma         NA  
     87 Padmé Amidala          16.5
 
-1.  Найти 10 самых “вытянутых” персонажей. “Вытянутость” оценить по
-    отношению массы (mass) к росту (height) персонажей.
+№8. Найти 10 самых “вытянутых” персонажей. “Вытянутость” оценить по
+отношению массы (mass) к росту (height) персонажей.
 
-<!-- -->
+    > starwars %>% mutate(long_per = mass / height) %>% arrange(desc(long_per)) %>% head(10) %>% select(name, long_per)
 
-    s
+    # A tibble: 10 × 2
+       name                  long_per
+       <chr>                    <dbl>
+     1 Jabba Desilijic Tiure    7.76 
+     2 Grievous                 0.736
+     3 IG-88                    0.7  
+     4 Owen Lars                0.674
+     5 Darth Vader              0.673
+     6 Jek Tono Porkins         0.611
+     7 Bossk                    0.595
+     8 Tarfful                  0.581
+     9 Dexter Jettster          0.515
+    10 Chewbacca                0.491
 
-1.  Найти средний возраст персонажей каждой расы вселенной Звездных
-    войн.
+№9. Найти средний возраст персонажей каждой расы вселенной Звездных
+войн.
 
-<!-- -->
+    > starwars %>% group_by(species) %>% summarise(mean(birth_year, na.rm = TRUE))
+    # A tibble: 38 × 2
+       species   `mean(birth_year, na.rm = TRUE)`
+       <chr>                                <dbl>
+     1 Aleena                               NaN  
+     2 Besalisk                             NaN  
+     3 Cerean                                92  
+     4 Chagrian                             NaN  
+     5 Clawdite                             NaN  
+     6 Droid                                 53.3
+     7 Dug                                  NaN  
+     8 Ewok                                   8  
+     9 Geonosian                            NaN  
+    10 Gungan                                52  
+    # ℹ 28 more rows
+    # ℹ Use `print(n = ...)` to see more rows
 
-    s
+Выведем на экран все 38 строк, в которых содержится результат работы
+команды.
 
-1.  Найти самый распространенный цвет глаз персонажей вселенной Звездных
-    войн.
+    > starwars %>% group_by(species) %>% summarise(mean(birth_year, na.rm = TRUE)) %>% print(n = 38)
+    # A tibble: 38 × 2
+       species        `mean(birth_year, na.rm = TRUE)`
+       <chr>                                     <dbl>
+     1 Aleena                                    NaN  
+     2 Besalisk                                  NaN  
+     3 Cerean                                     92  
+     4 Chagrian                                  NaN  
+     5 Clawdite                                  NaN  
+     6 Droid                                      53.3
+     7 Dug                                       NaN  
+     8 Ewok                                        8  
+     9 Geonosian                                 NaN  
+    10 Gungan                                     52  
+    11 Human                                      53.4
+    12 Hutt                                      600  
+    13 Iktotchi                                  NaN  
+    14 Kaleesh                                   NaN  
+    15 Kaminoan                                  NaN  
+    16 Kel Dor                                    22  
+    17 Mirialan                                   49  
+    18 Mon Calamari                               41  
+    19 Muun                                      NaN  
+    20 Nautolan                                  NaN  
+    21 Neimodian                                 NaN  
+    22 Pau'an                                    NaN  
+    23 Quermian                                  NaN  
+    24 Rodian                                     44  
+    25 Skakoan                                   NaN  
+    26 Sullustan                                 NaN  
+    27 Tholothian                                NaN  
+    28 Togruta                                   NaN  
+    29 Toong                                     NaN  
+    30 Toydarian                                 NaN  
+    31 Trandoshan                                 53  
+    32 Twi'lek                                    48  
+    33 Vulptereen                                NaN  
+    34 Wookiee                                   200  
+    35 Xexto                                     NaN  
+    36 Yoda's species                            896  
+    37 Zabrak                                     54  
+    38 NA                                         62 
 
-<!-- -->
+№10. Найти самый распространенный цвет глаз персонажей вселенной
+Звездных войн.
 
-    s
+    > starwars %>% count(eye_color) %>% filter(n == max(n))
+
+    # A tibble: 1 × 2
+      eye_color     n
+      <chr>     <int>
+    1 brown        21
 
 1.  Подсчитать среднюю длину имени в каждой расе вселенной Звездных
     войн.
 
 <!-- -->
 
-    s
+    > starwars %>% group_by(species) %>% summarise(avg_name_len = mean(nchar(name)))
+    # A tibble: 38 × 2
+       species   avg_name_len
+       <chr>            <dbl>
+     1 Aleena           13   
+     2 Besalisk         15   
+     3 Cerean           12   
+     4 Chagrian         10   
+     5 Clawdite         10   
+     6 Droid             4.83
+     7 Dug               7   
+     8 Ewok             21   
+     9 Geonosian        17   
+    10 Gungan           11.7 
+    # ℹ 28 more rows
+    # ℹ Use `print(n = ...)` to see more rows
 
-1.  Оформить отчет в соответствии с шаблоном
+Выведем на экран все 38 строк, в которых содержится результат работы
+команды.
 
-<!-- -->
+    > starwars %>% group_by(species) %>% summarise(avg_name_len = mean(nchar(name))) %>% print(n = 38)
 
-    s
+    # A tibble: 38 × 2
+       species        avg_name_len
+       <chr>                 <dbl>
+     1 Aleena                13   
+     2 Besalisk              15   
+     3 Cerean                12   
+     4 Chagrian              10   
+     5 Clawdite              10   
+     6 Droid                  4.83
+     7 Dug                    7   
+     8 Ewok                  21   
+     9 Geonosian             17   
+    10 Gungan                11.7 
+    11 Human                 11.3 
+    12 Hutt                  21   
+    13 Iktotchi              11   
+    14 Kaleesh                8   
+    15 Kaminoan               7   
+    16 Kel Dor                8   
+    17 Mirialan              14   
+    18 Mon Calamari           6   
+    19 Muun                   8   
+    20 Nautolan               9   
+    21 Neimodian             11   
+    22 Pau'an                10   
+    23 Quermian              11   
+    24 Rodian                 6   
+    25 Skakoan               10   
+    26 Sullustan              9   
+    27 Tholothian            10   
+    28 Togruta                8   
+    29 Toong                 14   
+    30 Toydarian              5   
+    31 Trandoshan             5   
+    32 Twi'lek               11   
+    33 Vulptereen             8   
+    34 Wookiee                8   
+    35 Xexto                  7   
+    36 Yoda's species         4   
+    37 Zabrak                 9.5 
+    38 NA                    11
