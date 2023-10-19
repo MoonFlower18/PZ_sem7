@@ -27,6 +27,43 @@
 
 ## Ход выполнения работы
 
+Для начала, установим пакет `dplyr`. Его можно установить в RStudio с
+помощью команды `install.packages("dplyr")`. После этого подключим пакет
+к текущему проекту с помощью `library(dplyr)`.
+
+    > install.packages("dplyr")
+
+    WARNING: Rtools is required to build R packages but is not currently installed. Please download and install the appropriate version of Rtools before proceeding:
+
+    https://cran.rstudio.com/bin/windows/Rtools/
+    Устанавливаю пакет в ‘C:/Users/Юлия/AppData/Local/R/win-library/4.2’
+    (потому что ‘lib’ не определено)
+    пробую URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/dplyr_1.1.3.zip'
+    Content type 'application/zip' length 1556139 bytes (1.5 MB)
+    downloaded 1.5 MB
+
+    пакет ‘dplyr’ успешно распакован, MD5-суммы проверены
+
+    Скачанные бинарные пакеты находятся в
+        C:\Users\Юлия\AppData\Local\Temp\Rtmpsbt1fc\downloaded_packages
+        
+        
+        
+    > library(dplyr)
+
+    Присоединяю пакет: ‘dplyr’
+
+    Следующие объекты скрыты от ‘package:stats’:
+
+        filter, lag
+
+    Следующие объекты скрыты от ‘package:base’:
+
+        intersect, setdiff, setequal, union
+
+    Предупреждение:
+    пакет ‘dplyr’ был собран под R версии 4.2.3
+
 №1. Сколько строк в датафрейме?
 
     > starwars %>% nrow()
