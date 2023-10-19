@@ -3,7 +3,7 @@ title: "Практическое задание №1"
 author: "Журавлева Юлия БИСО-01-20"
 format: 
   md:
-    output-file: PZ_1.md
+    output-file: README.md
 ---
 # Прохождение курса по R в RStudio через командную строку библиотеки Swirl
 
@@ -12,9 +12,46 @@ format:
 1.  Пройти обучение и познакомиться с синтаксисом языка программирования R;
 2.  Оформить отчет по изученному материалу.
 
+## Исходные данные
+
+1.  ОС Windows 10
+2.  RStudio Desktop
+3.  Интерпретатор языка R 4.2.2
+4.  Пакет Swirl
+
+## План
+
+1. Установить пакет `swirl`;
+2. Запустить в консоли `swirl::swirl()`;
+3. Пройти 4 урока из 14 предложенных.
+
 ## Ход выполнения работы
 
-Для начала загрузим пакет Swirl, выберем его во вкладке Packages и введём в строку команду `swirl()`. Далее выбираем курс R Programming и попадаем на список уроков, которые требуется сделать. Всего их 14, в рамках работы надо сделать 4 урока. 
+Для начала, установим библиотеку `swirl`. Её можно установить в RStudio с помощью команды `install.packages("swirl")`. После этого запустим библиотеку с помощью команды `swirl::swirl()`.
+
+```
+> install.packages("swirl")
+WARNING: Rtools is required to build R packages but is not currently installed. Please download and install the appropriate version of Rtools before proceeding:
+
+https://cran.rstudio.com/bin/windows/Rtools/
+Устанавливаю пакет в ‘C:/Users/Юлия/AppData/Local/R/win-library/4.2’
+(потому что ‘lib’ не определено)
+пробую URL 'https://cran.rstudio.com/bin/windows/contrib/4.2/swirl_2.4.5.zip'
+Content type 'application/zip' length 350063 bytes (341 KB)
+downloaded 341 KB
+
+пакет ‘swirl’ успешно распакован, MD5-суммы проверены
+
+Скачанные бинарные пакеты находятся в
+	C:\Users\Юлия\AppData\Local\Temp\Rtmpsbt1fc\downloaded_packages
+	
+	
+	
+> swirl::swirl()
+
+| Welcome to swirl! Please sign in. If you've been here before, use the same name as
+| you did then. If you are new, call yourself something unique.
+```
 
 ### Урок №1: Основные блоки программирования на языке R
 
