@@ -31,7 +31,7 @@
 
 Для начала, установим пакет `dplyr`. Его можно установить в RStudio с
 помощью команды `install.packages("dplyr")`. После этого подключим пакет
-к текущему проекту с помощью `library(dplyr)`
+к текущему проекту с помощью `library(dplyr)`.
 
     > install.packages("dplyr")
 
