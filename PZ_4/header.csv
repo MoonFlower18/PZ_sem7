@@ -2,7 +2,6 @@ Field ,Type,Description
 ts ,time ,Timestamp of the DNS request 
 uid ,string,Unique id of the connection 
 id ,recor ,ID record with orig/resp host/port. See conn.log 
-,d ,
 proto ,proto,Protocol of DNS transaction – TCP or UDP 
 trans_id ,count,16 bit identifier assigned by DNS client; responses match 
 query ,string,Domain name subject of the query 
