@@ -57,7 +57,7 @@
 
 Можем заметить, что в переменной `dns_l`, куда мы занесли данные DNS
 появились названия столбцов из переменной `headr`. ![Caption for the
-picture.](C:\Users\Юлия\Documents\PZ_sem7_7\PZ_4\screen1.png)
+picture.](https://github.com/MoonFlower18/PZ_sem7/blob/main/PZ_4/screen1.png)
 
 1.  Преобразовать данные в столбцах в нужный формат
 
