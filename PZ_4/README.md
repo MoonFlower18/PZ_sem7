@@ -29,12 +29,12 @@
 
 ***Часть 1. Подготовка данных***
 
-*1. Импортировать данные DNS*
+**1. Импортировать данные DNS**
 
 Для начала импортируем файл `header.csv` и занесём его в переменную
 `headr`
 
-    headr <- read_csv("header.csv")
+    > headr <- read_csv("header.csv")
 
     Rows: 20 Columns: 3── Column specification ─────────────────────────────────────────────────────
     Delimiter: ","
@@ -43,25 +43,32 @@
 Импортируем данные DNS из файла `dns.log` и занесём его в переменную
 `dns_l`
 
-    dns_l <- read_log("dns.log")
+    > dns_l <- read_log("dns.log")
 
     ── Column specification ─────────────────────────────────────────────────────────────
     cols(
       X1 = col_character()
     )
 
-*2. Добавить пропущенные данные о структуре данных (назначении
-столбцов)*
+**2. Добавить пропущенные данные о структуре данных (назначении
+столбцов)**
 
-    colnames(dns_l) = headr
+    > colnames(dns_l) = headr
 
 Можем заметить, что в переменной `dns_l`, куда мы занесли данные DNS
 появились названия столбцов из переменной `headr`. ![Caption for the
 picture.](https://github.com/MoonFlower18/PZ_sem7/blob/main/PZ_4/screen1.png)
 
-1.  Преобразовать данные в столбцах в нужный формат
+**3. Преобразовать данные в столбцах в нужный формат**
 
-2.  Просмотреть общую структуру данных с помощью функции `glimpse()`
+?????
+
+**4. Просмотреть общую структуру данных с помощью функции `glimpse()`**
+
+    > dns_l %>% glimpse()
+    Rows: 427,935
+    Columns: 1
+    $ `c("ts", "uid", "id", "proto", "trans_id", "query", "qclass", "qclass_name", "qtype", "qtype_name", "rcode", "rcode_name", "QR", "AA", "TC RD", "RA", "Z", "answers", "TTLs", "rejected")` <chr> …
 
 ## Оценка результатов
 
