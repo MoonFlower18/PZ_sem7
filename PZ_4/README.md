@@ -230,13 +230,13 @@ users_top_10 %>% head(10)
 соответственное количество обращений**
 
 ``` r
-domains_top_10 <- dns_l %>% group_by(dns_l$`query `) %>% summarise(req_count = n()) %>% arrange(desc(req_count))
+domains_top_10 <- dns_l %>% group_by(address = dns_l$`query `) %>% summarise(req_count = n()) %>% arrange(desc(req_count))
 
 domains_top_10 %>% head(10)
 ```
 
     # A tibble: 10 × 2
-       `dns_l$\`query \``                                                  req_count
+       address                                                             req_count
        <chr>                                                                   <int>
      1 "teredo.ipv6.microsoft.com"                                             39273
      2 "tools.google.com"                                                      14057
@@ -250,14 +250,40 @@ domains_top_10 %>% head(10)
     10 "ISATAP"                                                                 6569
 
 **5. Опеределите базовые статистические характеристики (функция
-summary() ) интервала времени между последовательным обращениями к
+`summary()`) интервала времени между последовательным обращениями к
 топ-10 доменам.**
+
+``` r
+domains_top_10_new <- dns_l %>% filter(tolower(dns_l$`query `) %in% domains_top_10$address) %>% arrange(`ts `)
+
+timing <- diff(dns_l$`ts `)
+
+summary(timing)
+```
+
+        Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+    -1502.62     0.00     0.25     0.27     3.01 49677.59 
 
 **6. Часто вредоносное программное обеспечение использует DNS канал в
 качестве канала управления, периодически отправляя запросы на
 подконтрольный злоумышленникам DNS сервер. По периодическим запросам на
 один и тот же домен можно выявить скрытый DNS канал. Есть ли такие IP
 адреса в исследуемом датасете?**
+
+``` r
+evil_ip <- dns_l %>% group_by(ip = tolower(dns_l$`id.orig_h`), domain = tolower(dns_l$`query `)) %>% summarise(req_count = n()) %>% filter(req_count > 1)
+```
+
+    `summarise()` has grouped output by 'ip'. You can override using the `.groups`
+    argument.
+
+``` r
+uni_evil <- unique(evil_ip$`ip`)
+
+uni_evil %>% length()
+```
+
+    [1] 240
 
 ## Оценка результатов
 
