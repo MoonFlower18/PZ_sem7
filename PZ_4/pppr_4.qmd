@@ -108,15 +108,17 @@ rate
 **3. Найдите топ-10 участников сети, проявляющих наибольшую сетевую активность**
 
 ```{r}
-top_10 <- dns_l %>% group_by(ip = id.orig_h) %>% summarise(num_activ = n()) %>% arrange(desc(num_activ))
+users_top_10 <- dns_l %>% group_by(ip = id.orig_h) %>% summarise(num_activ = n()) %>% arrange(desc(num_activ))
 
-top_10 %>% head(10)
+users_top_10 %>% head(10)
 ```
 
 **4. Найдите топ-10 доменов, к которым обращаются пользователи сети и соответственное количество обращений**
 
 ```{r}
+domains_top_10 <- dns_l %>% group_by(dns_l$`query `) %>% summarise(req_count = n()) %>% arrange(desc(req_count))
 
+domains_top_10 %>% head(10)
 ```
 
 **5. Опеределите базовые статистические характеристики (функция summary() ) интервала времени между последовательным обращениями к топ-10 доменам.**
