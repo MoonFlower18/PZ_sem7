@@ -222,7 +222,7 @@ x <- 9
 dir()
 ```
 
-    [1] "pppr_1.qmd"       "pppr_1.rmarkdown" "README.md"        "testdir"         
+    [1] "pppr_1.qmd"       "pppr_1.rmarkdown" "README.md"       
 
 Попробуем функцию вызова информации по команде `list.files`.
 
@@ -287,11 +287,6 @@ old.dir
 
 ``` r
 dir.create("testdir")
-```
-
-    Warning in dir.create("testdir"): 'testdir' уже существует
-
-``` r
 setwd("testdir")
 getwd()
 ```
@@ -308,7 +303,7 @@ file.create("mytest.R")
 dir()
 ```
 
-    [1] "mytest.R"  "mytest2.R" "mytest3.R" "testdir2" 
+    [1] "mytest.R"
 
 ``` r
 file.exists("mytest.R")
@@ -321,9 +316,9 @@ file.info("mytest.R")
 ```
 
              size isdir mode               mtime               ctime
-    mytest.R    0 FALSE  666 2023-12-17 02:47:01 2023-12-17 02:46:51
+    mytest.R    0 FALSE  666 2023-12-17 02:54:08 2023-12-17 02:54:08
                            atime exe
-    mytest.R 2023-12-17 02:47:01  no
+    mytest.R 2023-12-17 02:54:08  no
 
 ``` r
 file.rename("mytest.R", "mytest2.R")
@@ -335,7 +330,7 @@ file.rename("mytest.R", "mytest2.R")
 file.copy("mytest2.R", "mytest3.R")
 ```
 
-    [1] FALSE
+    [1] TRUE
 
 ``` r
 file.path("mytest3.R")
@@ -351,12 +346,6 @@ file.path("folder1", "folder2")
 
 ``` r
 dir.create(file.path('testdir2', 'testdir3'), recursive = TRUE)
-```
-
-    Warning in dir.create(file.path("testdir2", "testdir3"), recursive = TRUE):
-    'testdir2\testdir3' уже существует
-
-``` r
 setwd(old.dir)
 ```
 
