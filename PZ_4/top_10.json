@@ -1,0 +1,8 @@
+{
+  "host_name": ["teredo.ipv6.microsoft.com", "www.apple.com","safebrowsing.clients.google.com", "tools.google.com", "imap.gmail.com", "api.twitter.com", "api.facebook.com", "creativecommons.org", "www.dokuwiki.org", "www.php.net"],
+  "query": ["NA", "2a02:26f0:b7:4af::1aca", "172.217.168.238", "172.217.16.238", "142.250.102.109", "104.244.42.2", "163.70.151.23", "172.67.34.140", "138.201.137.132", "185.85.0.29"],
+  "country": ["NA", "United Kingdom", "United States", "Spain", "United States", "United States", "United Kingdom", "Canada", "Germany", "Germany"],
+  "regionName": ["NA", "England", "New Jersey", "Madrid", "California", "California", "England", "Ontario", "Saarland", "Bavaria"],
+  "city": ["NA", "London", "Trenton", "Madrid", "Mountain View", "San Francisco", "London", "Toronto", "St. Ingbert", "Munich"],
+  "org": ["NA", "Akamai Technologies", "Google LLC", "Google LLC", "Google LLC", "Twitter Inc", "Meta Platforms Ireland Limited", "Cloudflare, Inc.", "Hetzner", "Myra Security GmbH"]
+}

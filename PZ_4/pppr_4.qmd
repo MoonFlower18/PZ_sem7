@@ -40,6 +40,7 @@ format:
 ```{r}
 library(dplyr)
 library(readr)
+library(jsonlite)
 ```
 
 
@@ -58,16 +59,12 @@ dns_l <- read_delim("dns.log", col_names = FALSE, delim = "\t")
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
-**2. Добавить пропущенные данные о структуре данных (назначении столбцов)**
+**2-3. Добавить пропущенные данные о структуре данных (назначении столбцов). Преобразовать данные в столбцах в нужный формат.**
 
 ```{r}
 colnames(dns_l) <- headr[,1] %>% unlist()
 dns_l %>% glimpse()
 ```
-
-**3. Преобразовать данные в столбцах в нужный формат**
-
-?????
 
 **4. Просмотреть общую структуру данных с помощью функции `glimpse()`**
 
@@ -77,7 +74,7 @@ dns_l %>% glimpse()
 
 ***Часть 2. Анализ***
 
-**1. Сколько участников информационного обмена в сети Доброй Организации?**
+**4. Сколько участников информационного обмена в сети Доброй Организации?**
 
 ```{r}
 uni_id <- unique(dns_l$`id.orig_h`)
@@ -86,7 +83,7 @@ uni_user <- union(uni_id , uni_proto)
 uni_user %>% length()
 ```
 
-**2. Какое соотношение участников обмена внутри сети и участников обращений к внешним ресурсам?**
+**5. Какое соотношение участников обмена внутри сети и участников обращений к внешним ресурсам?**
 
 Диапазоны ip-адресов:
 
@@ -105,42 +102,87 @@ rate <- sum_int / count_ext
 rate
 ```
 
-**3. Найдите топ-10 участников сети, проявляющих наибольшую сетевую активность**
+**6. Найдите топ-10 участников сети, проявляющих наибольшую сетевую активность**
 
 ```{r}
-users_top_10 <- dns_l %>% group_by(ip = id.orig_h) %>% summarise(num_activ = n()) %>% arrange(desc(num_activ))
+users_top_10 <- dns_l %>% 
+  group_by(ip = id.orig_h) %>% 
+  summarise(num_activ = n()) %>% 
+  arrange(desc(num_activ))
 
 users_top_10 %>% head(10)
 ```
 
-**4. Найдите топ-10 доменов, к которым обращаются пользователи сети и соответственное количество обращений**
+**7. Найдите топ-10 доменов, к которым обращаются пользователи сети и соответственное количество обращений**
+
+Для начала, создадим датафрейм, который будет включать в себя только нужную информацию без мусора (чтобы `qtype_name` включал в себя "А" и "АААА"). Убедимся, что в начале и в конце есть оба значения.
 
 ```{r}
-domains_top_10 <- dns_l %>% group_by(address = dns_l$`query `) %>% summarise(req_count = n()) %>% arrange(desc(req_count))
+filtered_df <- subset(dns_l, dns_l$`qtype_name ` == "A")
+filtered_df_2 <- subset(dns_l, dns_l$`qtype_name ` == "AAAA")
+merged_df <- union(filtered_df_2, filtered_df)
 
-domains_top_10 %>% head(10)
+merged_df %>% head(10)
+merged_df %>% tail(10)
 ```
 
-**5. Опеределите базовые статистические характеристики (функция `summary()`) интервала времени между последовательным обращениями к топ-10 доменам.**
+Выводим ТОП-10 доменов.
 
 ```{r}
-domains_top_10_new <- dns_l %>% filter(tolower(dns_l$`query `) %in% domains_top_10$address) %>% arrange(`ts `)
+domains_top_10 <- merged_df %>% 
+  group_by(address = merged_df$`query `) %>% 
+  summarise(req_count = n()) %>% 
+  arrange(desc(req_count))
+
+domains_top_10 %>% 
+  .[-10,] %>% 
+  head(10)
+```
+
+**8. Опеределите базовые статистические характеристики (функция `summary()`) интервала времени между последовательным обращениями к топ-10 доменам.**
+
+```{r}
+domains_top_10_new <- dns_l %>% 
+  filter(tolower(dns_l$`query `) %in% domains_top_10$address) %>% 
+  arrange(`ts `)
 
 timing <- diff(dns_l$`ts `)
 
 summary(timing)
 ```
 
-**6. Часто вредоносное программное обеспечение использует DNS канал в качестве канала управления, периодически отправляя запросы на подконтрольный злоумышленникам DNS сервер. По периодическим запросам на один и тот же домен можно выявить скрытый DNS канал. Есть ли такие IP адреса в исследуемом датасете?**
+**9. Часто вредоносное программное обеспечение использует DNS канал в качестве канала управления, периодически отправляя запросы на подконтрольный злоумышленникам DNS сервер. По периодическим запросам на один и тот же домен можно выявить скрытый DNS канал. Есть ли такие IP адреса в исследуемом датасете?**
 
 ```{r}
-evil_ip <- dns_l %>% group_by(ip = tolower(dns_l$`id.orig_h`), domain = tolower(dns_l$`query `)) %>% summarise(req_count = n()) %>% filter(req_count > 1)
+evil_ip <- dns_l %>% 
+  group_by(ip = tolower(dns_l$`id.orig_h`), domain = tolower(dns_l$`query `)) %>% 
+  summarise(req_count = n()) %>% 
+  filter(req_count > 1)
 
 uni_evil <- unique(evil_ip$`ip`)
 
-uni_evil %>% length()
+uni_evil %>% length() 
+uni_evil %>% head(10)
 ```
 
+***Часть 3. Обогащение данных***
+
+**10. Определите местоположение (страну, город) и организацию-провайдера для топ-10 доменов. Для этого можно использовать сторонние сервисы, например `https://v4.ifconfig.co/`.**
+
+```{r}
+top_address <- domains_top_10 %>% 
+  .[-10,] %>% 
+  head(10)
+
+top_address
+```
+
+Выведем данные из json файла и выведем его в датафрейме.
+```{r}
+geo_ip <- fromJSON("top_10.json")
+geo_ip_df <- as.data.frame(geo_ip)
+geo_ip_df
+```
 
 ## Оценка результатов
 
