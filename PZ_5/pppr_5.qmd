@@ -66,7 +66,7 @@ ds1 %>% glimpse()
 ds1$First.time.seen <- as.POSIXct(ds1$First.time.seen, 
                                   format = "%Y-%m-%d %H:%M:%S")
 ds1$Last.time.seen <- as.POSIXct(ds1$Last.time.seen, 
-                                 format = "%Y-%-%d %H:%M:%S")
+                                 format = "%Y-%m-%d %H:%M:%S")
 ds1 %>% glimpse() 
 ```
 
@@ -84,7 +84,7 @@ ds2 %>% glimpse()
 ds2$First.time.seen <- as.POSIXct(ds2$First.time.seen, 
                                   format = "%Y-%m-%d %H:%M:%S")
 ds2$Last.time.seen <- as.POSIXct(ds2$Last.time.seen, 
-                                 format = "%Y-%-%d %H:%M:%S")
+                                 format = "%Y-%m-%d %H:%M:%S")
 ds2 %>% glimpse() 
 ```
 
