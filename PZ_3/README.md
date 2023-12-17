@@ -258,9 +258,6 @@ airlines %>% nrow()
 
     [1] 16
 
-    > airlines %>% nrow()
-    [1] 16
-
 #### №6. Сколько рейсов принял аэропорт John F Kennedy Intl в мае?
 
 ``` r

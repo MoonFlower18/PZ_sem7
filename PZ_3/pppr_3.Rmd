@@ -92,11 +92,6 @@ airlines %>% glimpse()
 airlines %>% nrow()
 ```
 
-```
-> airlines %>% nrow()
-[1] 16
-```
-
 #### №6. Сколько рейсов принял аэропорт John F Kennedy Intl в мае?
 
 ```{r}
