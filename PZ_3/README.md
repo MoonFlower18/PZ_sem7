@@ -33,8 +33,6 @@
 помощью команды `install.packages("dplyr")`. После этого подключим пакет
 к текущему проекту с помощью `library(dplyr)`.
 
-    install.packages("dplyr")
-
 ``` r
 library(dplyr)
 ```
