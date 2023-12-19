@@ -122,12 +122,12 @@ mac_id
 
 С помощью сервиса https://www.wireshark.org/tools/oui-lookup.html определим производителя для каждого обнаруженного устройства.
 
--> 00:03:7A Taiyo Yuden Co., Ltd.
--> 00:03:7F Atheros Communications, Inc.
--> 00:25:00 Apple, Inc.
--> 00:26:99 Cisco Systems, Inc
--> E0:D9:E3 Eltex Enterprise Ltd.
--> E8:28:C1 Eltex Enterprise Ltd.
+- 00:03:7A Taiyo Yuden Co., Ltd.
+- 00:03:7F Atheros Communications, Inc.
+* 00:25:00 Apple, Inc.
+* 00:26:99 Cisco Systems, Inc
++ E0:D9:E3 Eltex Enterprise Ltd.
++ E8:28:C1 Eltex Enterprise Ltd.
 
 #### Данные клиентов
 
