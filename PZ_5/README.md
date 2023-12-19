@@ -272,6 +272,78 @@ ds2 %>% glimpse()
 
 #### Точки доступа
 
+1.  Определим небезопасные точки доступа (без шифрования – OPN).
+
+``` r
+open_df <- ds1 %>% filter(Privacy == "OPN") %>%
+  select(BSSID, Privacy, LAN.IP, ESSID)
+
+open_df
+```
+
+                   BSSID Privacy          LAN.IP         ESSID
+    1  E8:28:C1:DC:B2:52     OPN 172. 17.203.197 MIREA_HOTSPOT
+    2  E8:28:C1:DC:B2:50     OPN 172. 17. 95.169  MIREA_GUESTS
+    3  E8:28:C1:DC:B2:51     OPN   0.  0.  0.  0              
+    4  E8:28:C1:DC:FF:F2     OPN 172. 17. 84.217              
+    5  00:25:00:FF:94:73     OPN   0.  0.  0.  0              
+    6  E8:28:C1:DD:04:52     OPN 172. 17.216.149 MIREA_HOTSPOT
+    7  E8:28:C1:DE:74:31     OPN   0.  0.  0.  0              
+    8  E8:28:C1:DE:74:32     OPN 172. 17. 93.250 MIREA_HOTSPOT
+    9  E8:28:C1:DC:C8:32     OPN 192.168.155. 53 MIREA_HOTSPOT
+    10 E8:28:C1:DD:04:50     OPN 192.168.  0.  1  MIREA_GUESTS
+    11 E8:28:C1:DD:04:51     OPN   0.  0.  0.  0              
+    12 E8:28:C1:DC:C8:30     OPN 172. 17.105.120  MIREA_GUESTS
+    13 E8:28:C1:DE:74:30     OPN   0.  0.  0.  0              
+    14 E0:D9:E3:48:FF:D2     OPN 192.168. 14.235              
+    15 E8:28:C1:DC:B2:41     OPN 169.254.175.203  MIREA_GUESTS
+    16 E8:28:C1:DC:B2:40     OPN 172. 17.203.197 MIREA_HOTSPOT
+    17 00:26:99:F2:7A:E0     OPN   0.  0.  0.  0              
+    18 E8:28:C1:DC:B2:42     OPN   0.  0.  0.  0              
+    19 E8:28:C1:DD:04:40     OPN 172. 17. 84.175 MIREA_HOTSPOT
+    20 E8:28:C1:DD:04:41     OPN 172. 17. 84.175  MIREA_GUESTS
+    21 E8:28:C1:DE:47:D2     OPN   0.  0.  0.  0 MIREA_HOTSPOT
+    22 02:BC:15:7E:D5:DC     OPN   0.  0.  0.  0       MT_FREE
+    23 E8:28:C1:DC:C6:B1     OPN   0.  0.  0.  0              
+    24 E8:28:C1:DD:04:42     OPN   0.  0.  0.  0              
+    25 E8:28:C1:DC:C8:31     OPN   0.  0.  0.  0              
+    26 E8:28:C1:DE:47:D1     OPN   0.  0.  0.  0              
+    27 00:AB:0A:00:10:10     OPN   0.  0.  0.  0              
+    28 E8:28:C1:DC:C6:B0     OPN   0.  0.  0.  0  MIREA_GUESTS
+    29 E8:28:C1:DC:C6:B2     OPN 192.168.  0.  1              
+    30 E8:28:C1:DC:BD:50     OPN   0.  0.  0.  0  MIREA_GUESTS
+    31 E8:28:C1:DC:0B:B2     OPN   0.  0.  0.  0              
+    32 E8:28:C1:DC:33:12     OPN   0.  0.  0.  0              
+    33 00:03:7A:1A:03:56     OPN   0.  0.  0.  0       MT_FREE
+    34 00:03:7F:12:34:56     OPN   0.  0.  0.  0       MT_FREE
+    35 00:3E:1A:5D:14:45     OPN   0.  0.  0.  0       MT_FREE
+    36 E0:D9:E3:49:00:B1     OPN   0.  0.  0.  0              
+    37 E8:28:C1:DC:BD:52     OPN   0.  0.  0.  0 MIREA_HOTSPOT
+    38 00:26:99:F2:7A:EF     OPN   0.  0.  0.  0              
+    39 02:67:F1:B0:6C:98     OPN   0.  0.  0.  0       MT_FREE
+    40 02:CF:8B:87:B4:F9     OPN   0.  0.  0.  0       MT_FREE
+    41 00:53:7A:99:98:56     OPN   0.  0.  0.  0       MT_FREE
+    42 E8:28:C1:DE:47:D0     OPN   0.  0.  0.  0  MIREA_GUESTS
+
+1.  Определим производителя для каждого обнаруженного устройства. Для
+    начала найдём уникальные устройства из списка обнаруженных.
+
+``` r
+mac_id <- sub("^([A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}).*", "\\1", open_df$BSSID) %>% unique()
+
+mac_id
+```
+
+     [1] "E8:28:C1" "00:25:00" "E0:D9:E3" "00:26:99" "02:BC:15" "00:AB:0A"
+     [7] "00:03:7A" "00:03:7F" "00:3E:1A" "02:67:F1" "02:CF:8B" "00:53:7A"
+
+С помощью сервиса https://www.wireshark.org/tools/oui-lookup.html
+определим производителя для каждого обнаруженного устройства.
+
+-\> 00:03:7A Taiyo Yuden Co., Ltd. -\> 00:03:7F Atheros Communications,
+Inc. -\> 00:25:00 Apple, Inc. -\> 00:26:99 Cisco Systems, Inc -\>
+E0:D9:E3 Eltex Enterprise Ltd. -\> E8:28:C1 Eltex Enterprise Ltd.
+
 #### Данные клиентов
 
 ## Оценка результатов

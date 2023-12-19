@@ -100,13 +100,34 @@ ds2 <- mutate_all(ds2, trimws)
 ds2 %>% glimpse() 
 ```
 
-
-
-
 ### Этап 2. Анализ
 
 #### Точки доступа
 
+1. Определим небезопасные точки доступа (без шифрования – OPN).
+```{r}
+open_df <- ds1 %>% filter(Privacy == "OPN") %>%
+  select(BSSID, Privacy, LAN.IP, ESSID)
+
+open_df
+```
+
+2. Определим производителя для каждого обнаруженного устройства. Для начала найдём уникальные устройства из списка обнаруженных. 
+
+```{r}
+mac_id <- sub("^([A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}).*", "\\1", open_df$BSSID) %>% unique()
+
+mac_id
+```
+
+С помощью сервиса https://www.wireshark.org/tools/oui-lookup.html определим производителя для каждого обнаруженного устройства.
+
+-> 00:03:7A Taiyo Yuden Co., Ltd.
+-> 00:03:7F Atheros Communications, Inc.
+-> 00:25:00 Apple, Inc.
+-> 00:26:99 Cisco Systems, Inc
+-> E0:D9:E3 Eltex Enterprise Ltd.
+-> E8:28:C1 Eltex Enterprise Ltd.
 
 #### Данные клиентов
 
