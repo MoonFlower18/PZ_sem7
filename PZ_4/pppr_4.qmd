@@ -79,7 +79,7 @@ dns_l %>% glimpse()
 ```{r}
 uni_id <- unique(dns_l$`id.orig_h`)
 uni_proto <- unique(dns_l$`id.resp_h`)
-uni_user <- union(uni_id , uni_proto)
+uni_user <- union(uni_id, uni_proto)
 uni_user %>% length()
 ```
 
