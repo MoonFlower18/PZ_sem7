@@ -210,7 +210,39 @@ mac_id2
 - E0:D9:E3 Eltex Enterprise Ltd.
 - E8:28:C1 Eltex Enterprise Ltd.
 
-2. Обнаружить устройства, которые НЕ рандомизируют свой MAC адрес
+2. Обнаружить устройства, которые НЕ рандомизируют свой MAC адрес. Устройства, которые не рандомизируют свой MAC-адрес, будут иметь постоянный BSSID.
+
+```{r}
+uni_mac <- unique(ds2$BSSID)
+uni_mac <- as.data.frame(uni_mac)
+uni_mac
+
+counts <- count(ds2, BSSID)
+counts <- counts %>% arrange(desc(n))
+counts <- counts[-c(1, 2), ]
+
+counts2 <- counts %>% arrange(desc(BSSID)) 
+counts2 <- counts2[setdiff(1:nrow(counts2), c(1, 2, 4:23, 25:27, 30:33, 36, 39, 40, 71:73)), ]
+counts2 %>% select(BSSID)
+```
+
+```{r}
+test <- ds2 %>%
+  group_by(BSSID) %>%
+  summarize(num_unique_macs = n_distinct(Station.MAC)) %>%
+  filter(num_unique_macs == 1)
+test
+
+test2 <- ds2 %>% filter(grepl("(..:..:..)", BSSID)) %>% select(BSSID)
+test2 <- test2 %>% arrange(desc(BSSID))
+test2
+
+#no_rand <- ds2 %>% filter(BSSID == "(not associated)") %>%
+#  select(Station.MAC, BSSID, Probed.ESSIDs) %>% arrange(desc(Probed.ESSIDs))
+
+#no_rand %>% head(10)
+```
+
 
 3. Кластеризовать запросы от устройств к точкам доступа по их именам.Определить время появления устройства в зоне радиовидимости и время выхода его из нее.
 
