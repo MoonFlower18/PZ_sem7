@@ -213,45 +213,41 @@ mac_id2
 2. Обнаружить устройства, которые НЕ рандомизируют свой MAC адрес. Устройства, которые не рандомизируют свой MAC-адрес, будут иметь постоянный BSSID.
 
 ```{r}
-uni_mac <- unique(ds2$BSSID)
-uni_mac <- as.data.frame(uni_mac)
-uni_mac
+no_rand <- ds2 %>%
+  filter(!grepl("\\(not associated\\)", BSSID) & !Station.MAC %in% grep(":", ds2$Station.MAC, value = TRUE)) %>%
+  distinct(Station.MAC, .keep_all = TRUE)
 
-counts <- count(ds2, BSSID)
-counts <- counts %>% arrange(desc(n))
-counts <- counts[-c(1, 2), ]
-
-counts2 <- counts %>% arrange(desc(BSSID)) 
-counts2 <- counts2[setdiff(1:nrow(counts2), c(1, 2, 4:23, 25:27, 30:33, 36, 39, 40, 71:73)), ]
-counts2 %>% select(BSSID)
+no_rand2 <- as.data.frame(no_rand$Station.MAC)
+names(no_rand2) <- "Devices"
+no_rand2
 ```
+
+3. Кластеризовать запросы от устройств к точкам доступа по их именам. Определить время появления устройства в зоне радиовидимости и время выхода его из нее.
 
 ```{r}
-test <- ds2 %>%
-  group_by(BSSID) %>%
-  summarize(num_unique_macs = n_distinct(Station.MAC)) %>%
-  filter(num_unique_macs == 1)
-test
+clust_df <- ds2 %>%
+  filter(!is.na(Probed.ESSIDs), !is.na(Power), !is.na(First.time.seen), !is.na(Last.time.seen)) %>% 
+  group_by(Station.MAC, Probed.ESSIDs) %>% summarise("first_log" = min(First.time.seen), 
+                                                     "last_log" = max(Last.time.seen),
+                                                     
+  Power = ifelse(all(is.numeric(as.numeric(Power))), sum(as.numeric(Power)), NA)) %>% arrange(first_log)
 
-test2 <- ds2 %>% filter(grepl("(..:..:..)", BSSID)) %>% select(BSSID)
-test2 <- test2 %>% arrange(desc(BSSID))
-test2
-
-#no_rand <- ds2 %>% filter(BSSID == "(not associated)") %>%
-#  select(Station.MAC, BSSID, Probed.ESSIDs) %>% arrange(desc(Probed.ESSIDs))
-
-#no_rand %>% head(10)
+clust_df %>% head(10)
 ```
 
+4. Оценить стабильность уровня сигнала внутри кластера во времени. Выявить наиболее стабильный кластер
 
-3. Кластеризовать запросы от устройств к точкам доступа по их именам.Определить время появления устройства в зоне радиовидимости и время выхода его из нее.
+```{r}
+s_clust <- clust_df %>% group_by(Station.MAC, Probed.ESSIDs) %>%
+  summarise(Power = mean(Power)) %>% arrange((Power))
 
-4. Оценить стабильность уровня сигнала внури кластера во времени. Выявить наиболее стабильный кластер
+s_clust %>% head(1)
+```
 
 ## Оценка результатов
 
-ааа
+В ходе практической работы были импортированы, подготовлены и проанализированы данные трафика Wi-Fi сетей, а таже дан ответ на поставленные задачи. 
 
 ## Вывод
 
-ааа
+Были развиты практические навыки использования языка программирования R для обработки данных с помощью пакета `dplyr`.
