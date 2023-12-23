@@ -95,13 +95,69 @@ ds %>% glimpse
 #### 1. Раскройте датафрейм избавившись от вложенных датафреймов.
 
 ```{r}
+ds_full <- ds %>% unnest(c(metadata, event, log, winlog, ecs, host, agent), names_sep = ".")
 
+ds_full %>% glimpse() #head(10)
 ```
 
-#### 2. Минимизируйте количество колонок в датафрейме – уберите колоки с единственным значением параметра.
+#### 2. Минимизируйте количество колонок в датафрейме – уберите колоки с единственным значением параметра (т.е. те, значение которых не меняется).
 
 ```{r}
+unique_count <- ds_full %>% 
+  summarise(uni_timestamp = n_distinct(timestamp),
+            uni_metadata.beat = n_distinct(metadata.beat),
+            uni_metadata.type = n_distinct(metadata.type),
+            uni_metadata.version = n_distinct(metadata.version),
+            uni_metadata.topic = n_distinct(metadata.topic),
+            uni_event.created = n_distinct(event.created),
+            uni_event.kind = n_distinct(event.kind),
+            uni_event.code = n_distinct(event.code),
+            uni_event.action = n_distinct(event.action),
+            uni_log.level = n_distinct(log.level),
+            uni_message = n_distinct(message),
+            uni_winlog.event_data = n_distinct(winlog.event_data),
+            uni_winlog.event_id = n_distinct(winlog.event_id),
+            uni_winlog.provider_name = n_distinct(winlog.provider_name),
+            uni_winlog.api = n_distinct(winlog.api),
+            uni_winlog.record_id = n_distinct(winlog.record_id),
+            uni_winlog.computer_name = n_distinct(winlog.computer_name),
+            uni_winlog.process = n_distinct(winlog.process),
+            uni_winlog.keywords = n_distinct(winlog.keywords),
+            uni_winlog.provider_guid = n_distinct(winlog.provider_guid),
+            uni_winlog.channel = n_distinct(winlog.channel),
+            uni_winlog.task = n_distinct(winlog.task),
+            uni_winlog.opcode = n_distinct(winlog.opcode),
+            uni_winlog.version = n_distinct(winlog.version),
+            uni_winlog.user = n_distinct(winlog.user),
+            uni_winlog.activity_id = n_distinct(winlog.activity_id),
+            uni_winlog.user_data = n_distinct(winlog.user_data),
+            uni_ecs.version = n_distinct(ecs.version),
+            uni_host.name = n_distinct(host.name),
+            uni_agent.ephemeral_id = n_distinct(agent.ephemeral_id),
+            uni_agent.hostname = n_distinct(agent.hostname),
+            uni_agent.id = n_distinct(agent.id),
+            uni_agent.version = n_distinct(agent.version),
+            uni_agent.type = n_distinct(agent.type),)
 
+unique_count %>% glimpse()
+```
+
+```{r}
+ds_full2 <- ds_full %>% select(-metadata.beat, 
+                               -metadata.type, 
+                               -metadata.version, 
+                               -metadata.topic, 
+                               -event.kind, 
+                               -winlog.api, 
+                               -ecs.version,
+                               -host.name, 
+                               -agent.ephemeral_id,
+                               -agent.hostname, 
+                               -agent.id, 
+                               -agent.version, 
+                               -agent.type)
+
+ds_full2 %>% head(10)
 ```
 
 #### 3. Какое количество хостов представлено в данном датасете?
