@@ -40,31 +40,7 @@ library(xml2) #для кодов винды
 library(rvest) #для кодов винды
 ```
 
-
 #### 1. Импортируйте данные в R. 
-
-```{r}
-url <- "https://storage.yandexcloud.net/iamcth-data/dataset.tar.gz"
-
-download.file(url, destfile = tf <- tempfile(fileext = ".tar.gz"), mode = "wb")
-
-temp_dir <- tempdir()
-untar(tf, exdir = temp_dir)
-
-json <- list.files(temp_dir, pattern="\\.json$", full.names = TRUE, recursive = TRUE)
-ds <- stream_in(file(json))
-ds %>% head(10)
-```
-
-```{r}
-#для кодов винды 
-
-win_url <- "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/appendix-l--events-to-monitor"
-win_html <- xml2::read_html(win_url)
-win_df <- rvest::html_table(win_html)
-```
-
-#### 2. Привести датасеты в вид “аккуратных данных”, преобразовать типы столбцов в соответствии с типом данных
 
 ```{r}
 url <- "https://storage.yandexcloud.net/iamcth-data/dataset.tar.gz"
@@ -76,18 +52,20 @@ json <- list.files(temp_dir, pattern="\\.json$", full.names = TRUE, recursive = 
 ds_json <- stream_in(file(json))
 ```
 
+#### 2. Привести датасеты в вид “аккуратных данных”, преобразовать типы столбцов в соответствии с типом данных
+
 ```{r}
 ds <- ds_json %>%
   mutate(`@timestamp` = as.POSIXct(`@timestamp`, format = "%Y-%m-%dT%H:%M:%OSZ", tz = "UTC")) %>%
   rename(timestamp = `@timestamp`, metadata = `@metadata`)
 
-ds
+ds %>% glimpse()
 ```
 
 #### 3. Просмотрите общую структуру данных с помощью функции glimpse()
 
 ```{r}
-ds %>% glimpse
+ds %>% glimpse()
 ```
 
 ### Этап 2. Анализ
@@ -97,7 +75,7 @@ ds %>% glimpse
 ```{r}
 ds_full <- ds %>% unnest(c(metadata, event, log, winlog, ecs, host, agent), names_sep = ".")
 
-ds_full %>% glimpse() #head(10)
+ds_full %>% glimpse() 
 ```
 
 #### 2. Минимизируйте количество колонок в датафрейме – уберите колоки с единственным значением параметра (т.е. те, значение которых не меняется).
@@ -163,25 +141,40 @@ ds_full2 %>% head(10)
 #### 3. Какое количество хостов представлено в данном датасете?
 
 ```{r}
+count_host <- ds_full %>% select(agent.hostname) 
+count_host %>% unique %>% count() 
 
+ds_full$agent.hostname %>% head(1)
 ```
 
 #### 4. Подготовьте датафрейм с расшифровкой Windows Event_ID, приведите типы данных к типу их значений.
 
 ```{r}
+win_url <- "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/appendix-l--events-to-monitor"
+win_html <- xml2::read_html(win_url)
+win_df <- rvest::html_table(win_html)
+win_df 
 
+event_win_df <- win_df[[1]] %>% mutate_at(vars(`Current Windows Event ID`, `Legacy Windows Event ID`), as.integer)
+event_win_df 
 ```
 
-#### 5. Есть ли в логе события с высоким и средним уровнем значимости? Сколько их?
+#### 5. Есть ли в логе события с высоким (High) и средним (Medium) уровнем значимости? Сколько их?
 
 ```{r}
+freq_table <- table(event_win_df$`Potential Criticality`)
+freq_df <- as.data.frame(freq_table)
+names(freq_df) <- c("Threat", "Count of threats")
 
+freq_df <- freq_df[-c(2, 4), ]
+freq_df
 ```
 
 ## Оценка результатов
 
-ааа
+В ходе практической работы были получены навыки исследования данных журнала Windows Active Directory и даны ответы на поставленные задачи.
 
 ## Вывод
 
+Были развиты практические навыки использования языка программирования R для обработки данных с помощью пакета `dplyr`.
 помогите
