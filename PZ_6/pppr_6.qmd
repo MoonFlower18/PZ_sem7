@@ -36,27 +36,59 @@ format:
 library(dplyr)
 library(jsonlite)
 library(tidyr)
-library(xml2)
-library(rvest)
+library(xml2) #для кодов винды
+library(rvest) #для кодов винды
 ```
 
 
 #### 1. Импортируйте данные в R. 
 
 ```{r}
+url <- "https://storage.yandexcloud.net/iamcth-data/dataset.tar.gz"
 
+download.file(url, destfile = tf <- tempfile(fileext = ".tar.gz"), mode = "wb")
+
+temp_dir <- tempdir()
+untar(tf, exdir = temp_dir)
+
+json <- list.files(temp_dir, pattern="\\.json$", full.names = TRUE, recursive = TRUE)
+ds <- stream_in(file(json))
+ds %>% head(10)
+```
+
+```{r}
+#для кодов винды 
+
+win_url <- "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/appendix-l--events-to-monitor"
+win_html <- xml2::read_html(win_url)
+win_df <- rvest::html_table(win_html)
 ```
 
 #### 2. Привести датасеты в вид “аккуратных данных”, преобразовать типы столбцов в соответствии с типом данных
 
 ```{r}
+url <- "https://storage.yandexcloud.net/iamcth-data/dataset.tar.gz"
+download.file(url, destfile = tf <- tempfile(fileext = ".tar.gz"), mode = "wb")
+temp_dir <- tempdir()
+untar(tf, exdir = temp_dir)
 
+json <- list.files(temp_dir, pattern="\\.json$", full.names = TRUE, recursive = TRUE)
+ds_json <- stream_in(file(json))
+```
+
+```{r}
+ds <- ds_json %>%
+  mutate(`@timestamp` = as.POSIXct(`@timestamp`, format = "%Y-%m-%dT%H:%M:%OSZ", tz = "UTC")) %>%
+  rename(timestamp = `@timestamp`, metadata = `@metadata`)
+
+ds
 ```
 
 #### 3. Просмотрите общую структуру данных с помощью функции glimpse()
 
-
-
+```{r}
+ds %>% glimpse
+```
 
 ### Этап 2. Анализ
 
